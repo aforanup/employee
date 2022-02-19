@@ -12,7 +12,7 @@ class ProfileModelForm(forms.ModelForm):
 class SkillSetModelForm(forms.ModelForm):
     class Meta:
         model = SkillSet
-        fields = '__all__'
+        fields = ('skill_name', 'proficiency_level')
 
 
 Skill_formset = inlineformset_factory(

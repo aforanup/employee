@@ -4,16 +4,36 @@
 
 <a href="{% url 'employee' %}">CREATE NEW</a>
 
-<div>
-    {% for profile in profiles %}
-
-    <p>{{profile.name}}
-    {{profile.email}}
-    {{profile.cv.url}}
-    <img src="{{profile.photo.url}}" style="width:100px; height:100px">
-</p>
-
-    {% endfor %}
+<div class="">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">cv</th>
+            <th scope="col">Photo</th>
+            <td scope="col">Action</td>
+          </tr>
+        </thead>
+        <tbody>
+            {% for profile in profiles %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td><a href="{% url 'employee_detail' profile.id%}">{{profile.name}}</a></td>
+                    <td>{{profile.email}}</td>
+                    <td><a href="{{profile.cv.url}}">{{profile.cv}}</a></td>
+                    <td><img src="{{profile.photo.url}}" alt="{{profile.name}}" style="width: 60px; border-radius: 100px;"></td>
+                    <td>
+                        <form action="{% url 'employee_delete' profile.pk %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
 </div>
 <div>
    

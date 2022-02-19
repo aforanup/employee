@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{%  url 'index' %}">back</a>
+<h3>{{object.name}}</h3>
+<p>{{object.email}}</p>
+
+<div class="">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">skill</th>
+            <th scope="col">proficiency</th>
+            <td scope="col">Action</td>
+          </tr>
+        </thead>
+        <tbody>
+            {% for skill in object.employeeProfile.all %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{skill.skill_name}}</td>
+                    <td>{{skill.proficiency_level}}</td>
+                    <td>
+                        <a href="{% url 'update_skillset' object.pk skill.pk %}" class="btn btn-primary">update</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

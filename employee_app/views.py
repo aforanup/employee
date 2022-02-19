@@ -1,15 +1,31 @@
+from pyexpat import model
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DeleteView, DetailView, UpdateView
 from . models import Profile, SkillSet
 from . forms import ProfileModelForm, SkillSetModelForm, Skill_formset
 
 
 def HomePage(request):
     profile = Profile.objects.all()
-    skills = SkillSet.objects.all()
-    context = {"profiles": profile, 'skills': skills}
+    context = {"profiles": profile}
     return render(request, 'employee_app/index.html', context)
+
+
+class EmployeeDetailView(DetailView):
+    template_name = 'employee_app/details.html'
+    model = Profile
+
+
+class UpdateSkillView(UpdateView):
+    template_name = 'employee_app/update_skill.html'
+    model = SkillSet
+    form_class = SkillSetModelForm
+
+    def get_success_url(self):
+        url = reverse_lazy('employee_detail', kwargs={
+                           'pk': self.kwargs['profile_pk']})
+        return url
 
 
 class EmployeeView(TemplateView):
@@ -36,3 +52,8 @@ class EmployeeView(TemplateView):
         else:
             print(profile.errors)
             return render(request, self.template_name, context={'profile_form': profile, 'skill_formset': skill_form})
+
+
+class EmployeeDeleteView(DeleteView):
+    model = Profile
+    success_url = reverse_lazy('index')
