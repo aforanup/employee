@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="{% url 'employee' %}">CREATE NEW</a>
+
+<div>
+    {% for profile in profiles %}
+
+    <p>{{profile.name}}
+    {{profile.email}}
+    {{profile.cv.url}}
+    <img src="{{profile.photo.url}}" style="width:100px; height:100px">
+</p>
+
+    {% endfor %}
+</div>
+<div>
+   
+    {% for skill in skills %}
+    <p>
+    {{skill.skill_name}}
+    {{skill.profieciency_level}}
+</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

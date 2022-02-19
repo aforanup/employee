@@ -1,0 +1,16 @@
+*.pyc
+__pycache__/
+migrations
+stacticcdn
+.idea/
+db.sqlite3
+.idea
+media/
+staticcdn/
+.vscode/
+venv/
+env/
+credentials.yaml
+build/
+logs/
+.history/
